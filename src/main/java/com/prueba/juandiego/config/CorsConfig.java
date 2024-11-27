@@ -16,8 +16,9 @@ public class CorsConfig {
                 registry.addMapping("/**") // Permitir todos los endpoints
                         .allowedOrigins("*") // Permitir todos los orígenes
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos permitidos
-                        .allowedHeaders("*") // Permitir todos los encabezados
-                        .allowCredentials(false); // No se necesitan credenciales si permites todo
+                        .allowedHeaders("Authorization", "Content-Type", "Accept")
+                        .exposedHeaders("Authorization") // Para enviar el token de vuelta si es necesario
+                        .allowCredentials(true); // Permite enviar cookies o credenciales
             }
         };
     }
