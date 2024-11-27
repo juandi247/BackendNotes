@@ -34,7 +34,6 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    @JsonIgnore
     private List<Category> categories;
 
 
