@@ -58,17 +58,24 @@ public class noteController {
     }
 
 
-
-    // Ruta para editar la nota
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Note> editNote(@PathVariable Long id,
-                                         @RequestBody NoteRequestDTO noteDTO,
-                                         Principal principal) {
-        String username = principal.getName();  // Obtener el nombre de usuario desde el token
-        Note updatedNote = noteService.updateNote(id, noteDTO, username);  // Llamar al servicio para editar la nota
-        return ResponseEntity.ok(updatedNote);
-    }
+    public ResponseEntity<NoteResponseDTO> editNote(@PathVariable Long id,
+                                                    @RequestBody NoteRequestDTO noteDTO,
+                                                    Principal principal) {
+        String username = principal.getName();
+        Note updatedNote = noteService.updateNote(id, noteDTO, username);
 
+        // Convertir la entidad Note a NoteResponseDTO
+        NoteResponseDTO responseDTO = NoteResponseDTO.builder()
+                .id(updatedNote.getId())
+                .title(updatedNote.getTitle())
+                .content(updatedNote.getContent())
+                .archived(updatedNote.isArchived())
+                .categoryName(updatedNote.getCategory() != null ? updatedNote.getCategory().getName() : null)
+                .build();
+
+        return ResponseEntity.ok(responseDTO);
+    }
 
 
 //Archive notes and unarchive
