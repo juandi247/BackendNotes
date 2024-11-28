@@ -19,7 +19,7 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:3001")); // Origen de tu cliente
+        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:3001","https://frontend-notes-production.up.railway.app")); // Origen de tu cliente
         corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Métodos permitidos
         corsConfig.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type")); // Cabeceras permitidas
         corsConfig.setAllowCredentials(true); // Permitir credenciales (cookies o tokens)
