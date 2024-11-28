@@ -24,15 +24,28 @@ public class noteController {
     private final CategoryService categoryService;
 
     @PostMapping("/create")
-    public ResponseEntity<Note> createNote(@RequestBody NoteRequestDTO noteDTO, Principal principal) {
+    public ResponseEntity<NoteResponseDTO> createNote(@RequestBody NoteRequestDTO noteDTO, Principal principal) {
         // Obtener el username del usuario autenticado
         String username = principal.getName();
 
         // Llamar al servicio para crear la nota
         Note createdNote = noteService.createNote(noteDTO, username);
 
-        return ResponseEntity.ok(createdNote);
+        // Convertir la entidad Note a NoteResponseDTO
+        NoteResponseDTO responseDTO = NoteResponseDTO.builder()
+                .id(createdNote.getId())
+                .title(createdNote.getTitle())
+                .content(createdNote.getContent())
+                .archived(createdNote.isArchived())
+                .categoryName(createdNote.getCategory() != null ? createdNote.getCategory().getName() : null)
+                .build();
+
+        return ResponseEntity.ok(responseDTO);
     }
+
+
+
+
 
 
 
